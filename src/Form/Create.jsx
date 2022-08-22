@@ -1,14 +1,16 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Create = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [author, setAuthor] = useState("mario");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
     const blog = { title, body, author };
     fetch(`http://localhost:8000/blogs`, {
       method: "POST",
@@ -16,7 +18,8 @@ export const Create = () => {
       body: JSON.stringify(blog),
     }).then(() => {
       console.log(blog);
-      setLoading(false)
+      setLoading(false);
+      navigate("/");
     });
   };
 
@@ -43,8 +46,7 @@ export const Create = () => {
           <option value="yoshi">Yoshi</option>
         </select>
         {!loading && <button>Add Post</button>}
-        {loading && <button disabled="disabled">Posting...</button> }
-        
+        {loading && <button disabled="disabled">Posting...</button>}
       </form>
     </div>
   );
